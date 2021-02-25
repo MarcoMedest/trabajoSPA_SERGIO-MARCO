@@ -1,0 +1,17 @@
+function abrirListadoServicios() {
+
+    // Oculto todos los formularios menos este
+    $("form:not('#frmListadoServicios')").parent("fieldset").hide("normal");
+
+    // Verifico si ya he cargado el formulario antes
+    if ($('#frmListadoServicios').size() == 0) {
+        $("<div>").appendTo('#formularios').load("listadoServicios/listadoServicios.html",
+            function() {
+                $.getScript("listadoServicios/main.js");
+            });
+
+    } else {
+        // Lo muestro si está oculto
+        $('#frmListadoServicios').parent().show("normal");
+    }
+}

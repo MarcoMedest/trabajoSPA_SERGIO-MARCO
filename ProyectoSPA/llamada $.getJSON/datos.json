@@ -1,0 +1,22 @@
+ [
+ 	{
+    "idServicio": "1",
+        "denominacion": "Cuidados a domicilio",
+        "agentes": 5,
+        "precio":"100€"
+
+    }, {
+	"idServicio": "2",
+        "denominacion": "Tratamiento en centro",
+        "agentes": 10,
+        "precio":"20€"
+
+    }, {
+	"idServicio": "3",
+        "denominacion": "Vigilancia intensiva",
+        "agentes": 2,
+        "precio":"300€"
+
+    }
+]
+

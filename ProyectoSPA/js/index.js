@@ -3,10 +3,8 @@
 $("#mnuAltaCliente").click(abrirAltaCliente);
 $("#mnuAltaAgente").click(abrirAltaAgente);
 $("#mnuAltaIncidencia").click(abrirAltaIncidencia);
-$("#mnuListadoCliente").click(function() {
-    $.get("php/getClientes.php", respuestaListadoClientes, 'json');
-});
-
+$("#mnuListadoCliente").click(listadoClientes);
+$("#mnuListadoIncidencias").click(abrirFiltroIncidencias)
 $("#mnuListadoAgente").click(pedirListado);
 	
 
@@ -74,11 +72,30 @@ function abrirAltaIncidencia() {
     }
 }
 
+function abrirFiltroIncidencias(){
+        // Oculto todos los formularios menos este
+    $("form:not('#frmFiltroIncidencia')").parent("fieldset").hide("normal");
+
+    // Verifico si ya he cargado el formulario antes
+    if ($('#frmFiltroIncidencia').size() == 0) {
+          $("<div>").appendTo('#formularios').load("altaincidencia/filtroincidencia.html",
+            function() {
+                $.getScript("altaincidencia/filtroincidencia.js");
+            });
+
+    } else {
+        // Lo muestro si está oculto
+        $('#frmFiltroIncidencia').parent().show("normal");
+        // Recarga de desplegable de propietarios
+    }
+}
+
+
 // Listado cliente
 
 
 
-function respuestaListadoClientes(oDatos, sStatus, oXHR) {
+function respuestaListadoClientes(oDatos) {
 
     var sTabla = '<table border="1">';
 
@@ -99,24 +116,29 @@ function respuestaListadoClientes(oDatos, sStatus, oXHR) {
 
     oVentana.document.body.innerHTML = sTabla;
 }
-/*
-function abrirListadoPorCliente() {
 
-    // Oculto todos los formularios menos este
-    $("form:not('#frmListadoCliente')").parent("fieldset").hide("normal");
 
-    // Verifico si ya he cargado el formulario antes
-    if ($('#frmListadoCliente').size() == 0) {
-        $("<div>").appendTo('#formularios').load("listadoClientesXML/listadoClientesXML.html",
-            function() {
-                $.getScript("listadoClientesXML/listadoClientesXML.js");
-            });
 
-    } else {
-        // Lo muestro si está oculto
-        $('#frmListadoCliente').parent().show("normal");
+function listadoClientes(){
+
+   var ajax_url = "php/getClientes.php";
+
+var ajax_request = new XMLHttpRequest();
+
+ajax_request.onreadystatechange = function() {
+
+    if (ajax_request.readyState == 4 && ajax_request.status == 200) {
+
+        var jsonObj = JSON.parse(ajax_request.responseText);
+        respuestaListadoClientes(jsonObj);
     }
-}*/
+}
+
+ajax_request.open( "GET", ajax_url, true );
+
+ajax_request.send();                                                              
+
+}
 
 
 // Pedir Listado Agente

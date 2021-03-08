@@ -10,9 +10,9 @@ $password  = "";
 $conexion = mysqli_connect($servidor, $usuario, $password,$basedatos) or die(mysqli_error($conexion));
 mysqli_set_charset($conexion,"utf8");
 mysqli_query($conexion,"utf8");
-
+$urgente = $_POST["param"];
 // Consulta SQL para obtener los datos de los centros.
-$sql = "SELECT NifUsuario,Nombre,Apellidos,Direccion FROM usuarios";
+$sql = 'SELECT IdIncidencia,NifUsuario,Descripcion,Fecha FROM `incidencias` WHERE incidencias.Urgente="'.$urgente.'"';
 $resultado = mysqli_query($conexion,$sql);
 
 $datos = [];
